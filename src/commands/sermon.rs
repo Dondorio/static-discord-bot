@@ -1,29 +1,8 @@
 use rand::{Rng, SeedableRng, rng, rngs::SmallRng};
-use serde::Deserialize;
 use std::{collections::HashMap, fs};
 use strfmt::{Formatter, strfmt_map};
 
 use crate::commands::*;
-
-#[derive(Debug, Deserialize, Clone)]
-#[allow(dead_code)]
-struct Completions {
-    pronoun_pos: Vec<String>,
-    pronoun_nom: Vec<String>,
-    strength: Vec<String>,
-    interaction: Vec<String>,
-    static_verb: Vec<String>,
-
-    sentence_object: Vec<String>,
-    sentence_object_good: Vec<String>,
-    sentence_object_bad: Vec<String>,
-
-    static_feeling_good: Vec<String>,
-    static_feeling_bad: Vec<String>,
-    donation: Vec<String>,
-
-    foo: String,
-}
 
 fn generate_sermon() -> Result<String, Error> {
     let len = rand::random_range(5..13);
@@ -40,8 +19,8 @@ fn generate_sermon() -> Result<String, Error> {
         "{donation} be to The Static. ",
     ];
 
-    let file = fs::read_to_string("src/commands/sermon.toml")?;
-    let cmp: HashMap<String, Vec<String>> = toml::from_str(file.as_str()).unwrap();
+    let file = fs::read_to_string("resources/sermon.toml")?;
+    let cmp: HashMap<String, Vec<String>> = toml::from_str(file.as_str())?;
 
     let select_random_element = |mut fmt: Formatter| {
         const DEFAULT: &Vec<String> = &Vec::<String>::new();

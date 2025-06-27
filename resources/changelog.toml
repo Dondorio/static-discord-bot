@@ -1,0 +1,48 @@
+V1x0x0x0 = """
+  > ### __Major Features:__
+  >
+  > **$charge**: A command which imitates the functionality of Cornelius' old $water command, increasing a counter and the static's power, returning a message to update the user on the current number of charges.
+  >
+  > **/sermon**: A command which returns a short prayer to the static. Can be called once an hour.
+  >
+  > **/static** *length*: Returns an audio file containing static of length *length* seconds. Restricted to 15 seconds. May only be called once a minute.
+"""
+
+V1x0x1x0 = """
+  > ### __Minor Updates:__
+  >
+  > **/static** *length   amplitude=1   pitch=0*: Amplitude allows you to adjust the volume of the static, on a scale from 0 to 1, 1 being normal, 0 being inaudible. Pitch allows you to give a relative pitch for the static to play at, in octaves, 0 being the normal pitch. Increased pitch does not have a major affect on the sound, but decreased pitch does. The maximum length of static depends on the pitch, as the pitch affects the calculation difficulty of generating static.
+
+  > Pitch feature suggested by @Simsbims#8532
+  > Please suggest features or report bugs! If I fix them I'll give you a shoutout :p
+"""
+
+V1x0x1x0A = """
+  > ### __Hotfixes:__
+  >
+  > - Fixed donda's bug by implementing pitch bounds of -8 to 4, shoutout @Donda#1268
+"""
+
+V1x1x0x0 = """
+  > ### __Major Features:__
+  >
+  > @Donda#1268 Is now a co-developer!!! Thanks Donda for all your help :D
+  >
+  > **/static_image** *width=100   height=100   number_of_colours=2   red=255   green=255   blue=255   value_of_black=0*: Returns a *width* by *height* image file containing static noise. *number_of_colours* affects the colour depth of the image. *red*, *green* and *blue* affect the maximum r, g and b values of pixels in the static. *value_of_black* affects the lightness of the black areas of the image. Restricted to 1000 by 1000 pixels. May only be called once a minute. Runs at roughly 77,000 pixels per second.
+  >
+  > **/help** *version=[current staticbot version]*: Returns the available commands of this staticbot version (or past versions if you really want...)
+  >
+  > **/changelog** *version=[current staticbot version]*: Returns the changes from the previous staticbot version to this one (again, or past versions)
+
+  > ### __Minor Updates:__
+  >
+  > **/static** has been updated to be called **/static_noise**
+  > **/static_noise** *length   amplitude=1.0   pitch=0.0   frequency_depth=2000*: Now uses a 'pink noise' algorithm. *pitch* now affects the perceived pitch, *frequency_depth* affects the number of frequency levels used to generate the sound. Low *frequency_depth* will make it generate faster but the quality of the static will be worse. The maximum *length* has been decreased due to more intensive generation. Generates at about 1 second of audio / 55 to 60 seconds of generation.
+  >
+  > *Note: Static audio generation has been made significantly slower by this upgrade, due to the computational complexity of this method of generating static. In the future the original method will also be made available again.*
+
+  > ### __Bug Fixes:__
+  >
+  > **$charge** outputs no longer appear out of order
+  > **$charge** spam should no longer block other commands
+"""

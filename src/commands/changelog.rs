@@ -1,21 +1,17 @@
-use std::fmt;
+use std::{collections::HashMap, fs};
 
 use crate::commands::*;
-use poise::serenity_prelude as serenity;
 
-#[derive(poise::ChoiceParameter, Debug)]
+#[derive(Debug, poise::ChoiceParameter)]
 enum Versions {
-    #[name = "1.0"]
-    V1x0,
-}
-
-impl fmt::Display for Versions {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let str = match *self {
-            Versions::V1x0 => "1.0",
-        };
-        write!(f, "{}", str)
-    }
+    #[name = "1.0.0.0"]
+    V1x0x0x0,
+    #[name = "1.0.1.0"]
+    V1x0x1x0,
+    #[name = "1.0.1.0A"]
+    V1x0x1x0A,
+    #[name = "1.1.0.0"]
+    V1x1x0x0,
 }
 
 #[poise::command(slash_command, prefix_command)]
@@ -23,15 +19,13 @@ pub async fn changelog(
     ctx: Context<'_>,
     #[description = "Version"] version: Option<Versions>,
 ) -> Result<(), Error> {
-    let response = format!("{}", version.unwrap_or(Versions::V1x0));
+    let file = fs::read_to_string("resources/changelog.toml")?;
+    let map: HashMap<String, String> = toml::from_str(file.as_str())?;
 
-    println!("{:?}", ctx.data());
-
-    {
-        let mut data = ctx.data().foo.lock().await;
-        *data = "not bar".to_string();
-    }
-
-    ctx.say(response).await?;
+    ctx.say(
+        map.get(&format!("{:?}", version.unwrap_or(Versions::V1x1x0x0)))
+            .unwrap_or(&"Failed to get changelog".to_string()),
+    )
+    .await?;
     Ok(())
 }

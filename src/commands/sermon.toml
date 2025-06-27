@@ -1,0 +1,110 @@
+pronoun_pos = [
+  "my",
+  "our",
+  "one's"
+]
+pronoun_nom = [
+  "I",
+  "we"
+]
+strength = [
+  "rock",
+  "fortress",
+  "saviour",
+  "light",
+  "stronghold",
+  "deliverer",
+  "keep",
+  "refuge",
+  "joy",
+  "lord",
+  "comfort"
+]
+interaction = [
+  "refuge",
+  "salvation",
+  "joy",
+  "comfort"
+]
+static_verb = [
+  "watches over",
+  "looks after",
+  "tends to",
+  "commands",
+  "rules",
+  "forgives"
+]
+sentence_object = [
+  "us",
+  "us mortals",
+  "us foolish mortals",
+  "the Static's subjects",
+  "the people",
+  "the faithful",
+  "the thankful",
+  "the believer",
+  "the believers",
+  "nature",
+  "the world"
+]
+sentence_object_good = [
+  "mercy",
+  "righteousness",
+  "kindness",
+  "static",
+  "lgbt+ rights",
+  "pride",
+  "humility",
+  "justice",
+  "mercy",
+  "righteousness",
+  "kindness",
+  "static",
+  "pride",
+  "humility",
+  "justice"
+] #repeated for rare response lgbt+ rights
+static_feeling_good = [
+  "loves",
+  "favours",
+  "brings",
+  "rewards",
+  "supports"
+]
+static_feeling_bad = [
+  "hates",
+  "condemns",
+  "condones",
+  "damns",
+  "banishes",
+  "punishes",
+  "darns"
+]
+sentence_object_bad = [
+  "greed",
+  "gluttony",
+  "vanity",
+  "heracy",
+  "avarice",
+  "hubris",
+  "vengefulness"
+]
+donation = [
+  "Praise",
+  "Thanks",
+  "Glory"
+]
+
+
+# [phrases]
+# phrases = [
+#   "The Static is <pronounPos> <strength>, <strength> and <strength>. ",
+#   "The Static is <pronounPos> <strength> and <strength>. ",
+#   "The Static is <pronounPos> <strength>. ",
+#   "In The Static <pronounNom> take <interaction>. ",
+#   "The Static <staticVerb> <sentenceObject>. ",
+#   "The Static <staticFeelingGood> <sentenceObjectGood>. ",
+#   "The Static <staticFeelingGood> <sentenceObjectGood> and <sentenceObjectGood>. ",
+#   "The Static <staticFeelingBad> <sentenceObjectBad>. ",
+#   "<donation> be to The Static. ",
+# ]

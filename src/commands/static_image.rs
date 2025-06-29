@@ -1,10 +1,9 @@
 use crate::commands::*;
-use crate::generators::image;
+use crate::generators::*;
 use poise::CreateReply;
 use serenity::all::CreateAttachment;
 use tokio::time::Instant;
 
-/// Displays your or another user's account creation date
 #[poise::command(slash_command, prefix_command)]
 pub async fn static_image(
     ctx: Context<'_>,
@@ -20,17 +19,19 @@ pub async fn static_image(
     let w = width.as_ref().unwrap_or(&100);
     let h = height.as_ref().unwrap_or(&100);
 
+    let fname = format!("tmp/{}.png", ctx.author().id);
+
     let now = Instant::now();
-    image::white_noise::generate_white_noise(*w, *h)
+    image::generate(*w, *h, &fname, Generators::White)
         .await
         .unwrap();
     let duration = now.elapsed();
 
-    let img = CreateAttachment::path("./img.png").await.unwrap();
+    let result = CreateAttachment::path(&fname).await.unwrap();
 
     ctx.send(CreateReply {
         content: Some(format!("Here's your image generated in {:?}", duration)),
-        attachments: vec![img],
+        attachments: vec![result],
         ephemeral: Some(true),
         reply: true,
         ..Default::default()

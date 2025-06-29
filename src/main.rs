@@ -1,13 +1,9 @@
-use std::env;
-
 use colored::Colorize;
-use serenity::all::{GuildId, MessageBuilder};
-use serenity::async_trait;
-use serenity::model::channel::Message;
-use serenity::model::gateway::Ready;
-// use serenity::prelude::*;
 use poise::serenity_prelude::*;
-use tokio::sync::Mutex;
+use serenity::all::GuildId;
+use serenity::{async_trait, model::gateway::Ready};
+use std::env;
+use tokio::{fs, sync::Mutex};
 
 mod commands;
 mod generators;
@@ -16,28 +12,12 @@ struct Handler;
 
 #[derive(Debug)]
 pub struct Data {
-    foo: Mutex<String>,
-} // User data, which is stored and accessible in all command invocations
-//
+    charge_count: Mutex<u32>,
+}
 
 #[async_trait]
 impl EventHandler for Handler {
-    async fn message(&self, ctx: Context, msg: Message) {
-        let mut charge_count = 0;
-
-        if msg.content.trim().to_lowercase() == "$charge" {
-            charge_count += 1;
-            let response = MessageBuilder::new()
-                .push("The static has been charged ")
-                .push_bold_safe(charge_count.to_string())
-                .push(" times today")
-                .build();
-
-            if let Err(err) = msg.channel_id.say(&ctx.http, &response).await {
-                println!("Error sending message: {:?}", err);
-            }
-        }
-    }
+    // async fn message(&self, ctx: Context, msg: Message) {}
 
     async fn ready(&self, _ctx: Context, ready: Ready) {
         println!("{} is connected!", ready.user.name.bold().purple());
@@ -51,12 +31,22 @@ async fn main() {
         | GatewayIntents::DIRECT_MESSAGES
         | GatewayIntents::MESSAGE_CONTENT;
 
+    // Ensure that tmp/audio and tmp/image exist for both generators
+    fs::create_dir_all("tmp/audio")
+        .await
+        .expect("Failed to create tmp/audio");
+    fs::create_dir_all("tmp/image")
+        .await
+        .expect("Failed to create tmp/image");
+
     let framework = poise::Framework::builder()
         .options(poise::FrameworkOptions {
             commands: vec![
                 commands::changelog::changelog(),
+                commands::charge::charge(),
                 commands::ping::ping(),
                 commands::sermon::sermon(),
+                commands::static_audio::static_audio(),
                 commands::static_image::static_image(),
             ],
             prefix_options: poise::PrefixFrameworkOptions {
@@ -80,7 +70,7 @@ async fn main() {
                 )
                 .await?;
                 Ok(Data {
-                    foo: Mutex::new(String::from("Bar")),
+                    charge_count: Mutex::new(0),
                 })
             })
         })
